@@ -21,11 +21,6 @@ export default class SingleImage extends PureComponent {
     style:PropTypes.object,
   }
 
-  static defaultProps = {
-    uri: 'https://avatars2.githubusercontent.com/u/31804215?s=40&v=4',
-  }
-
-
   constructor(props) {
     super(props);
     this.state = {
@@ -138,7 +133,6 @@ export default class SingleImage extends PureComponent {
 
   getFullscreenOpacity = () => {
     const { panning, target } = this.state;
-
     return {
       opacity: panning
         ? this.pan.interpolate({
@@ -202,12 +196,11 @@ export default class SingleImage extends PureComponent {
 
   renderDefaultHeader = () => (
     <TouchableWithoutFeedback onPress={this.close}>
-      <View>
+      <View style={{backgroundColor: "rgba(0,0,0,0.8)",borderRadius:8}}>
         <Text style={{
           color: 'white',
-          textAlign: 'right',
-          padding: 10,
-          margin: 30,
+          textAlign: 'center',
+          padding: 8
         }}>Close</Text>
       </View>
     </TouchableWithoutFeedback>
@@ -220,14 +213,14 @@ export default class SingleImage extends PureComponent {
       panning && { top: this.pan },
     ];
     return (
-      <Animated.View style={containerStyle} k>
+      <Animated.View style={[containerStyle]}>
         <ScrollView
           ref={ref => {
             if (ref) {
               ref.scrollResponderHandleStartShouldSetResponder = () => true;
             }
           }}
-          contentContainerStyle={{ flex: 1 }}
+          contentContainerStyle={{flex:1}}
           maximumZoomScale={2}
           alwaysBounceVertical={false}
         >
@@ -268,9 +261,8 @@ export default class SingleImage extends PureComponent {
         </SwipeableViews>
         <Animated.View style={[opacity, {
           position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
+          top: 40,
+          left: 16,
         }]}>
           {this.renderDefaultHeader()}
         </Animated.View>
